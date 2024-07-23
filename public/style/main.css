@@ -1,0 +1,7 @@
+.btn-personal {
+	background-color: #9cdced !important; /* Default background color */
+}
+
+.btn-personal:hover {
+	background-color: #7dc2d5 !important; /* Hover background color */
+}
