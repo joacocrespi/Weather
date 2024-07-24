@@ -1,12 +1,26 @@
 <%- include("partials/header.ejs") %>
 
-	  <form id="formCityName" method="POST" class="row g-3 justify-content-center">
+	  <form id="weatherForm" method="POST" action="/submit" class="row g-3 justify-content-center">
       <div class="mb-3 col-auto">        
-        <input type="text" id="locationByName"  name="locationByName" class="form-control   text-center" placeholder="Type your city name.">
+        <input type="text" name="cityName" class="form-control   text-center" placeholder="Type your city name.">
+      </div>
+      <div class="mb-3 col-auto">        
+        <input type="text" name="latitude" class="form-control   text-center" placeholder="Type your Latitude.">
+      </div>
+      <div class="mb-3 col-auto">        
+        <input type="text" name="longitude" class="form-control   text-center" placeholder="Type your Longitude.">
+      </div>
+      <div class="mb-3 col-auto">        
+        <input type="text" name="unit" class="form-control   text-center" placeholder="Type the unit you prefer.">
+      </div>
+      <div class="mb-3 col-auto">        
+        <input type="text" name="zipCode" class="form-control   text-center" placeholder="Type your city Zip Code.">
       </div>
       <div class="col-auto">
         <button type="submit" class="btn btn-personal">Search</button>
       </div>
+      <div class="container">
+        <%- locals.content %>
       </div>
 	  </form>
   </div>
