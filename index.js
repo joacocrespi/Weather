@@ -7,6 +7,13 @@ const port = 3000;
 
 const APIKey = "e4a85e00c8153d5efa391ba7672de62d";
 
+// const API_URL_city = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${APIKey}`;
+
+// const API_URL_zip = `http://api.openweathermap.org/geo/1.0/zip?zip=${zip}&appid${APIKey}`;
+
+// const zip = req.body.zipCode;
+// const city = req.body.cityName;
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
@@ -17,16 +24,20 @@ app.get("/", (req, res) => {
 app.post("/submit", async (req, res) => {
 	const lat = req.body.latitude;
 	const lon = req.body.longitude;
-	const zip = req.body.zipCode;
 	const units = req.body.unit;
 
-	const API_URL = `https://api.openweathermap.org/data/2.5/weather?mode=html&lat=${lat}&lon=${lon}&units=${units}&zip=${zip}&appid=${APIKey}`;
-
 	try {
-		const response = await axios.get(API_URL);
-		res.render("index.ejs", {content: response.data });
+		const response = await axios.get(
+			`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${units}&appid=${APIKey}`
+		);
+		const result = response.data; //response is in XML
+		console.log(result);
+		res.render("pages/weather.ejs", { content: result });
 	} catch (error) {
-		res.render("index.ejs", { content: JSON.stringify(error.response.data) });
+		const errorContent = error.response
+			? error.response.data
+			: "An error occurred";
+		res.render("pages/weather.ejs", { content: errorContent });
 	}
 });
 

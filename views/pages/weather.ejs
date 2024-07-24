@@ -1,0 +1,19 @@
+<%- include("../partials/header.ejs") %>
+
+<div class="container my-5">
+  <% if (locals.content){%>
+    <% const weather = content; %>
+    <h1>
+      <%=weather.name%>
+    </h1>
+  <% }else if(locals.error){ %>
+    <div id="tag-error" class="tag-error">
+      <%= error %>
+    </div>          
+  <% }; %>
+</div>
+<div class="col-auto">
+  <button type="button" class="btn btn-personal" 
+  onclick= "window.location.href='/'">Go Back</button>
+</div>
+<%-include("../partials/footer.ejs")%>
