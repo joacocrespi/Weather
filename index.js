@@ -11,9 +11,6 @@ const APIKey = "e4a85e00c8153d5efa391ba7672de62d";
 
 // const API_URL_zip = `http://api.openweathermap.org/geo/1.0/zip?zip=${zip}&appid${APIKey}`;
 
-// const zip = req.body.zipCode;
-// const city = req.body.cityName;
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
@@ -30,7 +27,7 @@ app.post("/submit", async (req, res) => {
 		const response = await axios.get(
 			`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${units}&appid=${APIKey}`
 		);
-		const result = response.data; //response is in XML
+		const result = response.data;
 		console.log(result);
 		res.render("pages/weather.ejs", { content: result });
 	} catch (error) {
@@ -39,6 +36,11 @@ app.post("/submit", async (req, res) => {
 			: "An error occurred";
 		res.render("pages/weather.ejs", { content: errorContent });
 	}
+});
+
+app.post("/submit-city", async (req, res) => {
+	// const zip = req.body.zipCode;
+	// const city = req.body.cityName;
 });
 
 app.listen(port, () => {
