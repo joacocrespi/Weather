@@ -1,8 +1,7 @@
 <%- include("../partials/header.ejs") %>
 
 <div class="container mt-5">
-  <% if (locals.content){%>
-    <% const weather = content; %>
+  <% if (locals.weather){%>
     <h1>
       <%=weather.name%>
       <img src="http://openweathermap.org/img/wn/<%= weather.weather[0].icon %>@2x.png" 
