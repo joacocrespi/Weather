@@ -1,53 +1,66 @@
 <%- include("../partials/header.ejs") %>
 
 <div class="container mt-5">
-  <% if (locals.weather){%>
+  <% if (locals.weather) { %>
     <h1>
-      <%=weather.name%>
-      <img src="http://openweathermap.org/img/wn/<%= weather.weather[0].icon %>@2x.png" 
-      alt="<%= weather.weather[0].description %>" 
-      style="width: 100px; height: 100px; vertical-align: middle;">
-      <%= weather.main.temp %>°C
+      <%= weather.name %>
+
+      <% if (weather.weather && weather.weather.length > 0) { %>
+        <img src="http://openweathermap.org/img/wn/<%= weather.weather[0].icon %>@2x.png" 
+        alt="<%= weather.weather[0].description %>" 
+        style="width: 100px; height: 100px; vertical-align: middle;">
+      <% } %>
+      
+      <%= weather.main ? weather.main.temp : "Temperature data not available" %>°C
     </h1>
+    
     <div class="weather-info">
       <div class="row">
         <div class="col-md-12">
           <div class="card mb-4">
             <div class="card-body">
               <h2 class="card-title">Current Weather</h2>
-              <p><strong>Temperature:</strong> <%= weather.main.temp %>°C</p>
-              <p><strong>Feels Like:</strong> <%= weather.main.feels_like %>°C</p>
-              <p><strong>Weather:</strong> <%= weather.weather[0].main %> - <%= weather.weather[0].description %></p>
-              <p><strong>Humidity:</strong> <%= weather.main.humidity %>%</p>
-              <p><strong>Pressure:</strong> <%= weather.main.pressure %> hPa</p>
-              <p><strong>Visibility:</strong> <%= weather.visibility %> meters</p>
-              <p><strong>Wind Speed:</strong> <%= weather.wind.speed %> m/s</p>
-              <p><strong>Wind Direction:</strong> <%= weather.wind.deg %>°</p>
-              <p><strong>Cloudiness:</strong> <%= weather.clouds.all %>%</p>
+              <p><strong>Temperature:</strong> <%= weather.main ? weather.main.temp : "N/A" %>°C</p>
+              <p><strong>Feels Like:</strong> <%= weather.main ? weather.main.feels_like : "N/A" %>°C</p>
+              <% if (weather.weather && weather.weather.length > 0) { %>
+                <p><strong>Weather:</strong> <%= weather.weather[0].main %> - <%= weather.weather[0].description %></p>
+              <% } else { %>
+                <p><strong>Weather:</strong> Not available</p>
+              <% } %>
+              <p><strong>Humidity:</strong> <%= weather.main ? weather.main.humidity : "N/A" %>%</p>
+              <p><strong>Pressure:</strong> <%= weather.main ? weather.main.pressure : "N/A" %> hPa</p>
+              <p><strong>Visibility:</strong> <%= weather.visibility ? weather.visibility : "N/A" %> meters</p>
+              <p><strong>Wind Speed:</strong> <%= weather.wind ? weather.wind.speed : "N/A" %> m/s</p>
+              <p><strong>Wind Direction:</strong> <%= weather.wind ? weather.wind.deg : "N/A" %>°</p>
+              <p><strong>Cloudiness:</strong> <%= weather.clouds ? weather.clouds.all : "N/A" %>%</p>
             </div>
           </div>
         </div>
+
         <div class="col-md-12">
           <div class="card">
             <div class="card-body text-muted">
               <h3 class="card-title">Additional Info</h3>
-              <p><strong>Location Coordinates:</strong> Latitude <%= weather.coord.lat %>, Longitude <%= weather.coord.lon %></p>
-              <p><strong>Min Temperature:</strong> <%= weather.main.temp_min %>°C</p>
-              <p><strong>Max Temperature:</strong> <%= weather.main.temp_max %>°C</p>
-              <p><strong>Sunrise:</strong> <%= new Date(weather.sys.sunrise * 1000).toLocaleTimeString() %></p>
-              <p><strong>Sunset:</strong> <%= new Date(weather.sys.sunset * 1000).toLocaleTimeString() %></p>
+              <p><strong>Location Coordinates:</strong> Latitude <%= weather.coord ? weather.coord.lat : "N/A" %>, Longitude <%= weather.coord ? weather.coord.lon : "N/A" %></p>
+              <p><strong>Min Temperature:</strong> <%= weather.main ? weather.main.temp_min : "N/A" %>°C</p>
+              <p><strong>Max Temperature:</strong> <%= weather.main ? weather.main.temp_max : "N/A" %>°C</p>
+              <p><strong>Sunrise:</strong> <%= weather.sys ? new Date(weather.sys.sunrise * 1000).toLocaleTimeString() : "N/A" %></p>
+              <p><strong>Sunset:</strong> <%= weather.sys ? new Date(weather.sys.sunset * 1000).toLocaleTimeString() : "N/A" %></p>
               <p><strong>Timezone:</strong> <%= new Date().toLocaleString('en-US', {timeZone: 'UTC', timeZoneName: 'short'}) %></p>
             </div>
           </div>
         </div>
-  <% }else if(locals.error){ %>
+      </div>
+    </div>
+  <% } else if (error) { %>
     <div id="tag-error" class="tag-error">
       <%= error %>
     </div>          
-  <% }; %>
+  <% } %>
 </div>
+
 <div class="col-auto pt-3">
-  <button type="button" class="btn btn-personal" 
-  onclick= "window.location.href='/'">Go Back</button>
+  <button type="button" class="btn btn-personal" onclick="window.location.href='/'">Go Back</button>
 </div>
-<%-include("../partials/footer.ejs")%>
+
+<%- include("../partials/footer.ejs") %>
